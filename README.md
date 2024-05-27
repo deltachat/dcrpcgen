@@ -9,7 +9,7 @@ Automatic code generation for the Delta Chat JSON-RPC API.
 ## Install
 
 ```sh
-pip install dcrpcgen
+pip install git+https://github.com/deltachat/dcrpcgen
 ```
 
 ## Usage
