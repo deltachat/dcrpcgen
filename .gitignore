@@ -1,0 +1,14 @@
+__pycache__
+.cache
+.mypy_cache
+.pytest_cache
+build
+dist
+.eggs
+*.egg-info
+*/_version.py
+
+*~
+.#*
+*#
+generated

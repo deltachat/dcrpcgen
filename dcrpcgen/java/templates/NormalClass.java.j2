@@ -1,0 +1,7 @@
+{{ banner }}
+package {{ package }};
+
+{% if "description" in schema %}{{ create_comment(schema["description"]) }}{% endif -%}
+public class {{ name }} {
+{{ generate_properties(schema["properties"], False) -}}
+}

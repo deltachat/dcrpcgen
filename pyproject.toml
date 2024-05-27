@@ -1,0 +1,51 @@
+[build-system]
+requires = ["setuptools>=64", "setuptools_scm>=8"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dcrpcgen"
+description = "Delta Chat JSON-RPC client generator"
+dynamic = ["version"]
+readme = "README.md"
+requires-python = ">=3.10"
+keywords = ["deltachat", "bot"]
+authors = [
+  {name = "adbenitez", email = "adb@merlinux.eu"},
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+]
+dependencies = [
+    "Jinja2>=3.1.3,<4.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/deltachat/dcrpcgen"
+
+[project.optional-dependencies]
+dev = [
+  "black",
+  "mypy",
+  "isort",
+  "pylint",
+  "pylama",
+  "pytest",
+]
+
+[project.scripts]
+dcrpcgen = "dcrpcgen.main:main"
+
+[tool.setuptools_scm]
+# can be empty if no extra settings are needed, presence enables setuptools_scm
+version_file = "dcrpcgen/_version.py"
+
+[tool.setuptools]
+packages = ["dcrpcgen"]
+
+[tool.isort]
+profile = "black"
+
+[tool.mypy]
+ignore_missing_imports = "True"

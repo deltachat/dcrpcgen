@@ -1,0 +1,13 @@
+{{ banner }}
+package {{ package }};
+
+public enum {{ name }} {
+{%- for schema in schemas -%}
+  {% if "description" in schema %}
+    {{- "\n" + create_comment(schema["description"], "  ").rstrip() }}
+  {%- endif %}
+  {%- for val in schema["enum"] %}
+  {{ val }},
+  {%- endfor %}
+{% endfor -%}
+}

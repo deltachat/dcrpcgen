@@ -1,0 +1,19 @@
+{{ banner }}
+package {{ package }};
+
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
+import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
+
+{% if "description" in schema %}{{ create_comment(schema["description"]) }}{% endif -%}
+@JsonTypeInfo(use=Id.MINIMAL_CLASS, include=As.PROPERTY, property="kind")
+@JsonSubTypes({ {%- for typ in schema["oneOf"] %}{% if loop.index != 1 %}, {% endif %}@Type({{ name }}.{{ get_subtype_name(typ) }}.class){% endfor -%} })
+public abstract class {{ name }} {
+
+{% for typ in schema["oneOf"] %}
+  {{- generate_subtype(typ, name) }}
+
+{% endfor -%}
+}
