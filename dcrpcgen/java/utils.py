@@ -17,10 +17,7 @@ def create_comment(text: str, indentation: str = "") -> str:
 
     comment = f"{indentation}/**\n"
     for line in text.split("\n"):
-        if line.strip():
-            comment += f"{indentation} * {line}\n"
-        else:
-            comment += f"{indentation} *\n"
+        comment += f"{indentation} * {line.strip() or '<p>'}\n"
     return comment + f"{indentation} */\n"
 
 

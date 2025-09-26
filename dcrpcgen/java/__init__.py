@@ -77,7 +77,9 @@ def generate_method(method: dict[str, Any]) -> str:
         decode_type(param["schema"])[0] + " " + param["name"] for param in params
     )
     text += ") throws RpcException {\n"
-    args = ", ".join([f'"{name}"'] + [param["name"] for param in params])
+    args = ", ".join(
+        [f'"{name}"'] + [f'mapper.valueToTree({param["name"]})' for param in params]
+    )
     if result_type == "void":
         text += f"    transport.call({args});\n"
     else:

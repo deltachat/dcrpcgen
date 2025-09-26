@@ -8,8 +8,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 
 {% if "description" in schema %}{{ create_comment(schema["description"]) }}{% endif -%}
-@JsonTypeInfo(use=Id.MINIMAL_CLASS, include=As.PROPERTY, property="kind")
-@JsonSubTypes({ {%- for typ in schema["oneOf"] %}{% if loop.index != 1 %}, {% endif %}@Type({{ name }}.{{ get_subtype_name(typ) }}.class){% endfor -%} })
+@JsonTypeInfo(use=Id.NAME, include=As.PROPERTY, property="kind")
+@JsonSubTypes({ {%- for typ in schema["oneOf"] %}{% if loop.index != 1 %}, {% endif %}@Type(value = {{ name }}.{{ get_subtype_name(typ) }}.class, name="{{ get_subtype_name(typ) }}"){% endfor -%} })
 public abstract class {{ name }} {
 
 {% for typ in schema["oneOf"] %}

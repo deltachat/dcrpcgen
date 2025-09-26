@@ -26,11 +26,15 @@ public abstract class BaseTransport implements Rpc.Transport {
   /* Get next Response as raw JSON String from the RPC server */
   protected abstract String getResponse();
 
-  public void call(String method, Object... params) throws RpcException {
+  public ObjectMapper getObjectMapper() {
+    return mapper;
+  }
+
+  public void call(String method, JsonNode... params) throws RpcException {
     innerCall(method, params);
   }
 
-  public <T> T callForResult(TypeReference<T> resultType, String method, Object... params) throws RpcException {
+  public <T> T callForResult(TypeReference<T> resultType, String method, JsonNode... params) throws RpcException {
     try {
       JsonNode node = innerCall(method, params);
       if (node.isNull()) return null;
@@ -40,7 +44,7 @@ public abstract class BaseTransport implements Rpc.Transport {
     }
   }
 
-  private JsonNode innerCall(String method, Object... params) throws RpcException {
+  private JsonNode innerCall(String method, JsonNode... params) throws RpcException {
     int id;
     synchronized (this) {
       id = ++requestId;
@@ -101,10 +105,10 @@ public abstract class BaseTransport implements Rpc.Transport {
   private static class Request {
     private final String jsonrpc = "2.0";
     public final String method;
-    public final Object[] params;
+    public final JsonNode[] params;
     public final int id;
 
-    public Request(String method, Object[] params, int id) {
+    public Request(String method, JsonNode[] params, int id) {
       this.method = method;
       this.params = params;
       this.id = id;
